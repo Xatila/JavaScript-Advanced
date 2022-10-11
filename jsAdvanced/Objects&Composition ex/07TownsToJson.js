@@ -1,18 +1,22 @@
 function convertToJson(array) {
-    let result = [];
-  for (let i = 0; i < array.length; i++) {
-    let [zero, town, latitude, longitude] = array[i].split("|");
-    
+  let result = [];
+  for (let i = 1; i < array.length; i++) {
+    let tokens = array[i].split("|");
+    let [noNeed, town, latitude, longitude] = tokens;
+    let townName = town.trim();
+    let latitudeSize = latitude.trim();
+    let longitudeSize = longitude.trim();
+    latitudeSize = Number(latitudeSize).toFixed(2);
+    longitudeSize = Number(longitudeSize).toFixed(2);
+
     let obj = {
-        "Town": town,
-        "Latitude":latitude,
-        "Longitude":longitude.toFixed(2)
-    }
+      Town: townName,
+      Latitude: Number(latitudeSize),
+      Longitude: Number(longitudeSize),
+    };
     result.push(obj);
   }
-  for (const key in result) {
-    console.log(key, result[key]);
-  }
+  console.log(JSON.stringify(result));
 }
 convertToJson([
   "| Town | Latitude | Longitude |",
